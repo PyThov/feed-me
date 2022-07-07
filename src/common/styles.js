@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { platformTopSpacing } from "./utils";
+import { PlatformTopSpacing } from "./utils";
 
 export const commonStyles = StyleSheet.create({
     basicInput: {
@@ -12,12 +12,10 @@ export const commonStyles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: platformTopSpacing,
+        marginTop: PlatformTopSpacing,
     },
     headerText: {
         textAlign: "center",
-        // alignItems: "center",
-        // justifyContent: "center",
         fontSize: 18,
         fontWeight: "600",
         color: "black",
@@ -27,6 +25,6 @@ export const commonStyles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "flex-start",
-        marginTop: platformTopSpacing + 4,
+        marginTop: PlatformTopSpacing + 4,
     },
 })

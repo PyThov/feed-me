@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Button, Modal, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, Modal, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { commonStyles } from "../common/styles";
-import { IRestaurant } from "../common/types";
-import { generateRestaurantElements } from "../common/utils";
+import { AsyncStoreRestaurants, GenerateRestaurantElements } from "../common/utils";
 
 const styles = StyleSheet.create({
     modalView: {
@@ -31,7 +30,13 @@ interface IEditRestaurantProps {
 
 export default function EditRestaurant({visible, setVisible, restaurants, setRestaurants}: IEditRestaurantProps) {
     const [input, setInput] = useState("");
-    const [tempRestaurants, setTempRestaurants] = useState(restaurants);
+
+
+    const closeModal = () => {
+        console.log(restaurants)
+        AsyncStoreRestaurants(restaurants)
+        setVisible(false)
+    }
 
     const addRestaurant = (restaurant: string) => {
         if (restaurant == "") {
@@ -40,7 +45,7 @@ export default function EditRestaurant({visible, setVisible, restaurants, setRes
 
         if (!restaurants.has(restaurant)) {
             let temp = new Set<string>([...restaurants])
-            temp.add(restaurant)
+            temp.add(restaurant.toUpperCase())
             setRestaurants(temp)
         }
     }
@@ -57,6 +62,15 @@ export default function EditRestaurant({visible, setVisible, restaurants, setRes
         }
     }
 
+    const removeAllRestaurants = () => {
+        // TODO: Implement "are you sure?"
+        setRestaurants(new Set<string>())
+    }
+
+    const importRestaurants = () => {
+        console.log("TODO: Implement importing of restaurants from notepad/clipboard")
+    }
+
     return (
         <View>
             <Modal
@@ -66,7 +80,7 @@ export default function EditRestaurant({visible, setVisible, restaurants, setRes
             >
                 {/* Header with close button and title */}
                 <View>
-                    <Button title="Close" onPress={() => setVisible(false)}/>
+                    <Button title="Close" onPress={() => closeModal()}/>
                     <Text style={commonStyles.headerText}>Edit Restaurants</Text>
                     <View style={{
                             borderBottomColor: 'gray',
@@ -95,14 +109,21 @@ export default function EditRestaurant({visible, setVisible, restaurants, setRes
                         </View>
                 </View>
             
-                {/* List of restuarants; Each should have a '+', '-', and 'edit' button; can weight options?*/}
-                <View style={{flex: 1, margin: 20}}>
-                    {generateRestaurantElements(restaurants, removeRestaurant)}
-                </View>
+                {/* List of restuarants; each with a '-' button to remove*/}
+                <ScrollView style={{flex: 1, margin: 20}}>
+                    {GenerateRestaurantElements(restaurants, removeRestaurant)}
+                </ScrollView>
             
-            {/*Submit, Remove all, and import from notepad option */}
-                <View style={{flex: 0}}>
-                    <Text>Submit, remove all, import...</Text>
+            {/*Remove all and import from notepad option */}
+                <View style={{flex: 0, marginBottom: 10}}>
+                    <View style={{flexDirection: "row", justifyContent: "space-around"}}>
+                        <View style={{width: "45%"}}>
+                            <Button title="Remove All" color="#e85458" onPress={() => removeAllRestaurants()} />
+                        </View>
+                        {/* <View style={{width: "45%"}}>
+                            <Button title="Import" color="#9b4dd6" onPress={() => importRestaurants()}/>
+                        </View> */}
+                    </View>
                 </View>
             </Modal>
         </View>

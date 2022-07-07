@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Modal, StyleSheet, Text, View } from "react-native";
 import { Separator } from "../common/components";
 import { commonStyles } from "../common/styles";
+import { GetRandomRestaurant } from "../common/utils";
 
 const styles = StyleSheet.create({
     modalView: {
@@ -25,10 +26,11 @@ const styles = StyleSheet.create({
 
 interface IPickRestaurantProps {
     visible: boolean;
-    setVisible: (a: boolean) => void
+    setVisible: (a: boolean) => void;
+    restaurants: Set<string>;
 }
 
-export default function PickRestaurant({visible, setVisible}: IPickRestaurantProps) {
+export default function PickRestaurant({visible, setVisible, restaurants}: IPickRestaurantProps) {
     return (
         <View>
             <Modal
@@ -41,7 +43,7 @@ export default function PickRestaurant({visible, setVisible}: IPickRestaurantPro
                     <View style={styles.modalView}>
                         <Text style={{fontSize: 20, fontWeight: "600"}}>Eat at...</Text>
                         <Separator size={8}/>
-                        <Text style={{fontSize: 16}}>CHICK FIL A</Text>
+                        <Text style={{fontSize: 16, textAlign: "center"}}>{GetRandomRestaurant(restaurants)}</Text>
                         <Separator size={8} />
                         <Button title="Close" onPress={() => setVisible(false)}/>
                     </View>

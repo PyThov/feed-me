@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { LargeButton, Separator } from "./common/components";
+import { AsyncGetRestaurants } from "./common/utils";
 import EditRestaurant from "./components/EditRestaurant";
 import PickRestaurant from "./components/PickRestaurant";
 
@@ -24,7 +25,15 @@ export default function Main(){
   const [pickVisible, setPickVisible] = useState(false)
   const [editVisible, setEditVisible] = useState(false)
   const [discoverVisible, setDiscoverVisible] = useState(false)
-  const [restaurants, setRestaurants] = useState(new Set<string>(["chickfila"])) // TODO: Initialize restaurants from datastore
+  const [restaurants, setRestaurants] = useState(new Set<string>()) // TODO: Initialize restaurants from datastore
+  const [dataLoaded, setDataLoaded] = useState(false)
+
+  if (!dataLoaded) {
+    AsyncGetRestaurants().then((result) => {
+      setRestaurants(result || new Set<string>())
+    })
+    setDataLoaded(true)
+  }
 
   return (    
       <View style={styles.container}>
@@ -33,12 +42,12 @@ export default function Main(){
         </View>
           <Separator />
           <LargeButton text={"Pick a restaurant"} onClick={() => setPickVisible(true)}/>
-          <PickRestaurant visible={pickVisible} setVisible={setPickVisible} />
+          <PickRestaurant visible={pickVisible} setVisible={setPickVisible} restaurants={restaurants} />
           <Separator />
           <LargeButton text={"Edit Restaurants"} onClick={() => setEditVisible(true)} />
           <EditRestaurant visible={editVisible} setVisible={setEditVisible} setRestaurants={setRestaurants} restaurants={restaurants}/>
           <Separator />
-          <LargeButton text={"Discover"} onClick={() => console.log("discover restaurants")} />
+          {/* <LargeButton text={"Discover"} onClick={() => console.log("discover restaurants")} /> */}
       </View>
   )
 }
