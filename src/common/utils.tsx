@@ -1,8 +1,55 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { Platform, StatusBar, Text, TouchableHighlight, View } from "react-native"
+import { Button, Modal, Platform, StatusBar, StyleSheet, Text, TouchableHighlight, View } from "react-native"
 import Ionicons from "react-native-vector-icons/Ionicons"
+import { commonColors } from "./styles"
+
+const styles = StyleSheet.create({
+    areYouSureModal: {
+        backgroundColor: commonColors.red,
+        justifyContent: "space-between",
+        alignSelf: "center",
+        borderRadius: 4,
+        marginTop: "50%",
+    },
+    boldLightText: {
+        color: "#eee",
+        fontSize: 16,
+        fontWeight: "600",
+        padding: 20,
+        textAlign: "center"
+    }
+})
 
 export const PlatformTopSpacing = Platform.OS === "android" ? StatusBar.currentHeight : 0
+
+export const AreYouSureModal = ({visible, setVisible, func}: {
+    visible: boolean,
+    setVisible: (a: boolean) => void,
+    func: () => void
+    }) => {
+    return (
+        <View>
+            <Modal
+                animationType="slide"
+                visible={visible}
+                onRequestClose={() => {setVisible(false)}}
+                transparent={true}
+            >
+                <View style={styles.areYouSureModal}>
+                    <Text style={styles.boldLightText}>Are you sure?</Text>
+                    <Button
+                        color="darkred"
+                        title="Yes"
+                        onPress={() => {
+                        func()
+                        setVisible(false)
+                        }} 
+                    />
+                </View>
+            </Modal>
+        </View>
+    )
+}
 
 export const GenerateRestaurantElements = (restaurants: Set<string>, removeRestaurant: (a: string) => void) => {
 

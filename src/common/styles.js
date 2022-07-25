@@ -28,3 +28,8 @@ export const commonStyles = StyleSheet.create({
         marginTop: PlatformTopSpacing + 4,
     },
 })
+
+export const commonColors = {
+    main: "dodgerblue",
+    red: "#e85458",
+}

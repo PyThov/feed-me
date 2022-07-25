@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { commonStyles } from "../common/styles";
-import { AsyncStoreRestaurants, GenerateRestaurantElements } from "../common/utils";
+import { commonColors, commonStyles } from "../common/styles";
+import { AreYouSureModal, AsyncStoreRestaurants, GenerateRestaurantElements } from "../common/utils";
 
 const styles = StyleSheet.create({
     modalView: {
@@ -30,7 +30,7 @@ interface IEditRestaurantProps {
 
 export default function EditRestaurant({visible, setVisible, restaurants, setRestaurants}: IEditRestaurantProps) {
     const [input, setInput] = useState("");
-
+    const [removeAllCheckVisible, setRemoveAllCheckVisible] = useState(false);
 
     const closeModal = () => {
         console.log(restaurants)
@@ -63,13 +63,13 @@ export default function EditRestaurant({visible, setVisible, restaurants, setRes
     }
 
     const removeAllRestaurants = () => {
-        // TODO: Implement "are you sure?"
         setRestaurants(new Set<string>())
     }
 
-    const importRestaurants = () => {
-        console.log("TODO: Implement importing of restaurants from notepad/clipboard")
-    }
+    // TODO
+    // const importRestaurants = () => {
+    //     console.log("TODO: Implement importing of restaurants from notepad/clipboard")
+    // }
 
     return (
         <View>
@@ -118,9 +118,17 @@ export default function EditRestaurant({visible, setVisible, restaurants, setRes
                 <View style={{flex: 0, marginBottom: 10}}>
                     <View style={{flexDirection: "row", justifyContent: "space-around"}}>
                         <View style={{width: "45%"}}>
-                            <Button title="Remove All" color="#e85458" onPress={() => removeAllRestaurants()} />
+                            <Button title="Remove All" color={commonColors.red} disabled={restaurants.size === 0} onPress={() => setRemoveAllCheckVisible(true)} />
+                            <View style={{right: 0}}>
+                                <AreYouSureModal
+                                    visible={removeAllCheckVisible}
+                                    setVisible={setRemoveAllCheckVisible}
+                                    func={removeAllRestaurants}
+                                />
+                            </View>
                         </View>
                         {/* <View style={{width: "45%"}}>
+                            TODO
                             <Button title="Import" color="#9b4dd6" onPress={() => importRestaurants()}/>
                         </View> */}
                     </View>
