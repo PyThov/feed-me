@@ -3,24 +3,6 @@ import { Button, Modal, ScrollView, StyleSheet, Text, TextInput, View } from "re
 import { commonColors, commonStyles } from "../common/styles";
 import { AreYouSureModal, AsyncStoreRestaurants, GenerateRestaurantElements } from "../common/utils";
 
-const styles = StyleSheet.create({
-    modalView: {
-        margin: 10,
-        backgroundColor: "white",
-        borderRadius: 10,
-        padding: 15,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    }
-})
-
 interface IEditRestaurantProps {
     visible: boolean;
     setVisible: (a: boolean) => void;
