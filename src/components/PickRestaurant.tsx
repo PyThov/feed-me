@@ -41,7 +41,7 @@ export default function PickRestaurant({visible, setVisible, restaurants}: IPick
             >
                 <View style={commonStyles.topView}>
                     <View style={styles.modalView}>
-                        <Text style={{fontSize: 20, fontWeight: "600"}}>Eat at...</Text>
+                        <Text style={{fontSize: 20, fontWeight: "600"}}>Suggested to eat at...</Text>
                         <Separator size={8}/>
                         <Text style={{fontSize: 16, textAlign: "center"}}>{GetRandomRestaurant(restaurants)}</Text>
                         <Separator size={8} />
