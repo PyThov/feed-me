@@ -1,5 +1,6 @@
-import { StyleSheet } from "react-native";
-import { PlatformTopSpacing } from "./utils";
+import { StyleSheet, Platform, StatusBar } from "react-native";
+
+export const PlatformTopSpacing = Platform.OS === "android" ? StatusBar.currentHeight : 0
 
 export const commonStyles = StyleSheet.create({
     basicInput: {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, Modal, ScrollView, Text, TextInput, View } from "react-native";
 import { commonColors, commonStyles } from "../common/styles";
 import { AreYouSureModal, AsyncStoreRestaurants, GenerateRestaurantElements } from "../common/utils";
 

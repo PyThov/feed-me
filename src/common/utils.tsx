@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { Button, Modal, Platform, StatusBar, StyleSheet, Text, TouchableHighlight, View } from "react-native"
+import { Button, Modal, StyleSheet, Text, TouchableHighlight, View } from "react-native"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import { commonColors } from "./styles"
 
@@ -19,8 +19,6 @@ const styles = StyleSheet.create({
         textAlign: "center"
     }
 })
-
-export const PlatformTopSpacing = Platform.OS === "android" ? StatusBar.currentHeight : 0
 
 export const AreYouSureModal = ({visible, setVisible, func}: {
     visible: boolean,
